@@ -139,7 +139,7 @@ On Error GoTo PROC_ERROR
     AppSettings.WriteSetting "General", "displayLocale", displayLanguageInfos(frmSettings.cbxDisplayLanguages.ListIndex).Locale
     AppSettings.WriteSetting "General", "spellingLocale", spellingLanguageInfos(frmSettings.cbxSpellingLanguages.ListIndex).Locale
     AppSettings.WriteSetting "General", "splitCharacters", frmSettings.txtSplitCharacters.value
-    AppSettings.WriteSetting "General", "autoCheck", frmSettings.chkAutoCheck.value
+    AppSettings.WriteSetting "General", "autoCheck", frmSettings.chkAutocheck.value
     AppSettings.WriteSetting "General", "autoClear", frmSettings.chkAutoClear.value
     AppSettings.WriteSetting "General", "errorColorIndex", frmSettings.txtColor.ForeColor
     LoadSettings
