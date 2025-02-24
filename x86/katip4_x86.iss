@@ -5,7 +5,6 @@ AppPublisher=Berkesas
 AppPublisherURL=https://berkesas.github.io/katip
 DefaultDirName={commonpf}\Katip
 AppCopyright=Copyright (C) 2012-2025 Nazar Mammedov
-PrivilegesRequired=admin
 OutputBaseFilename=katip_setup_x86
 DefaultGroupName=Katip
 

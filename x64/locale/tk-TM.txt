@@ -1,4 +1,4 @@
-language=Turkmen (Turkmenistan)
+﻿language=Turkmen (Turkmenistan)
 locale=tk-TM
 appName=Kätip
 rtabKatipLabel=Kätip
@@ -50,3 +50,4 @@ msgFolderDoesNotExist=Papka tapylmady:
 msgDictionaryReloaded=Sözlükler täzeden ýüklendi.
 msgWordAdded=Söz goşuldy.
 txtNoErrors=Ýalňyş tapylmady.
+titleAddWord=Söz goş

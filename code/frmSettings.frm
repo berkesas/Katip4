@@ -82,7 +82,7 @@ Sub LoadLabels()
         Me.lblSplitCharacters.Caption = Localization.GetLocalizedString("lblSplitCharacters", "Split Characters")
         Me.btnReload.Caption = Localization.GetLocalizedString("btnReload", "Reload")
         Me.lblOpenDictionaries.Caption = Localization.GetLocalizedString("lblOpenDictionariesFolder", "Open dictionaries folder")
-        Me.chkAutoCheck.Caption = Localization.GetLocalizedString("chkAutocheck", "Check automatically on window open")
+        Me.chkAutocheck.Caption = Localization.GetLocalizedString("chkAutocheck", "Check automatically on window open")
         Me.chkAutoClear.Caption = Localization.GetLocalizedString("chkAutoclear", "Clear automatically on window close")
         Me.txtColor.value = Localization.GetLocalizedString("txtSampleText", "Sample text")
 End Sub
@@ -110,7 +110,7 @@ Private Sub LoadValues()
     cbxSpellingLanguages.ListIndex = Settings.GetSpellingLocaleIndex
     
     txtSplitCharacters.value = Settings.GetSplitCharacters
-    chkAutoCheck.value = Settings.GetAutoCheck
+    chkAutocheck.value = Settings.GetAutoCheck
     chkAutoClear.value = Settings.GetAutoClear
     txtColor.ForeColor = Settings.GetErrorColorIndex
 'PROC_EXIT:

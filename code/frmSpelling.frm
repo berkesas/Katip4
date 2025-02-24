@@ -4,7 +4,7 @@ Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmSpelling
    ClientHeight    =   4428
    ClientLeft      =   36
    ClientTop       =   384
-   ClientWidth     =   6684
+   ClientWidth     =   6900
    OleObjectBlob   =   "frmSpelling.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -57,7 +57,7 @@ Sub LoadLabels()
     frmSpelling.btnChangeAll.Caption = Localization.GetLocalizedString("btnChangeAll", "Change All")
     frmSpelling.btnClear.Caption = Localization.GetLocalizedString("btnClear", "Clear")
     frmSpelling.btnCheck.Caption = Localization.GetLocalizedString("btnCheck", "Check")
-    frmSpelling.chkAutoCheck.Caption = Localization.GetLocalizedString("chkAutocheckShort", "Automatic check")
+    frmSpelling.chkAutocheck.Caption = Localization.GetLocalizedString("chkAutocheckShort", "Automatic check")
     frmSpelling.chkAutoClear.Caption = Localization.GetLocalizedString("chkAutoclearShort", "Automatic clear")
     frmSpelling.btnCancel.Caption = Localization.GetLocalizedString("btnCancel", "Cancel")
 End Sub

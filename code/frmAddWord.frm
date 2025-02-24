@@ -50,6 +50,7 @@ Private Sub EventManager_DisplayLanguageChanged(ByVal newLanguage As String)
     LoadLabels
 End Sub
 Sub LoadLabels()
+    Me.Caption = Localization.GetLocalizedString("titleAddWord", "Add Word")
     Me.lblWord.Caption = Localization.GetLocalizedString("lblWord", "Word")
     Me.lblAffix.Caption = Localization.GetLocalizedString("lblAffix", "Affixes")
     Me.lblWordNote.Caption = Localization.GetLocalizedString("lblWordNote", "Input word as plain text")

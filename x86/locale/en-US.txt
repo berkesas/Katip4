@@ -1,4 +1,4 @@
-language=English (U.S.)
+﻿language=English (U.S.)
 locale=en-US
 appName=Katip
 rtabKatipLabel=Katip
@@ -50,3 +50,4 @@ msgFolderDoesNotExist=Folder does not exist:
 msgDictionaryReloaded=Dictionaries are reloaded.
 msgWordAdded=Word added.
 txtNoErrors=No misspellings found.
+titleAddWord=Add Word

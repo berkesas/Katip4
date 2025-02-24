@@ -91,7 +91,7 @@ Sub Initialize()
 End Sub
 Public Sub ShowSpelling()
     UI.Initialize
-    frmSpelling.chkAutoCheck.value = Settings.GetAutoCheck
+    frmSpelling.chkAutocheck.value = Settings.GetAutoCheck
     frmSpelling.chkAutoClear.value = Settings.GetAutoClear
     FirstError
     'frmSpelling.btnChange.Enabled = False
