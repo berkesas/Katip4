@@ -1,0 +1,197 @@
+LanguageID,Locale,Name,Enabled
+1078,af-ZA,Afrikaans (South Africa),1
+1052,sq-AL,Albanian (Albania),1
+1118,am-ET,Amharic (Ethiopia),1
+1025,ar-SA,Arabic (Saudi Arabia),1
+5121,ar-DZ,Arabic (Algeria),1
+15361,ar-BH,Arabic (Bahrain),1
+3073,ar-EG,Arabic (Egypt),1
+2049,ar-IQ,Arabic (Iraq),1
+11265,ar-JO,Arabic (Jordan),1
+13313,ar-KW,Arabic (Kuwait),1
+12289,ar-LB,Arabic (Lebanon),1
+4097,ar-LY,Arabic (Libya),1
+6145,ar-MA,Arabic (Morocco),1
+8193,ar-OM,Arabic (Oman),1
+16385,ar-QA,Arabic (Qatar),1
+10241,ar-SY,Arabic (Syria),1
+7169,ar-TN,Arabic (Tunisia),1
+14337,ar-AE,Arabic (U.A.E.),1
+9217,ar-YE,Arabic (Yemen),1
+1067,hy-AM,Armenian (Armenia),1
+1101,as-IN,Assamese (India),1
+2092,az-Cyrl-AZ,Azerbaijani (Cyrillic) (Azerbaijan),1
+1068,az-Latn-AZ,Azerbaijani (Latin) (Azerbaijan),1
+1069,eu-ES,Basque (Spain),1
+2067,nl-BE,Dutch (Belgium),1
+2060,fr-BE,French (Belgium),1
+1093,bn-IN,Bangla (India),1
+1026,bg-BG,Bulgarian (Bulgaria),1
+1109,my-MM,Burmese (Myanmar),1
+1059,be-BY,Belarusian (Belarus),1
+1027,ca-ES,Catalan (Spain),1
+1116,chr-Cher-US,Cherokee (United States),1
+3076,zh-HK,Chinese (Traditional) (Hong Kong S.A.R.),1
+5124,zh-MO,Chinese (Traditional) (Macao S.A.R.),1
+4100,zh-SG,Chinese (Simplified) (Singapore),1
+1050,hr-HR,Croatian (Croatia),1
+1029,cs-CZ,Czech (Czech Republic),1
+1030,da-DK,Danish (Denmark),1
+1125,dv-MV,Divehi (Maldives),1
+1043,nl-NL,Dutch (Netherlands),1
+3081,en-AU,English (Australia),1
+10249,en-BZ,English (Belize),1
+4105,en-CA,English (Canada),1
+9225,en-029,English (Caribbean),1
+6153,en-IE,English (Ireland),1
+8201,en-JM,English (Jamaica),1
+5129,en-NZ,English (New Zealand),1
+13321,en-PH,English (Republic of the Philippines),1
+7177,en-ZA,English (South Africa),1
+11273,en-TT,English (Trinidad and Tobago),1
+2057,en-GB,English (United Kingdom),1
+1033,en-US,English (United States),1
+12297,en-ZW,English (Zimbabwe),1
+1061,et-EE,Estonian (Estonia),1
+1080,fo-FO,Faroese (Faroe Islands),1
+1124,fil-PH,Filipino (Philippines),1
+1035,fi-FI,Finnish (Finland),1
+1036,fr-FR,French (France),1
+11276,fr-CM,French (Cameroon),1
+3084,fr-CA,French (Canada),1
+9228,fr-CD,French (Congo, DRC),1
+12300,fr-CI,French (Côte d'Ivoire),1
+15372,fr-HT,French (Haiti),1
+5132,fr-LU,French (Luxembourg),1
+13324,fr-ML,French (Mali),1
+6156,fr-MC,French (Principality of Monaco),1
+14348,fr-MA,French (Morocco),1
+8204,fr-RE,French (Reunion),1
+10252,fr-SN,French (Senegal),1
+7180,fr-029,French (Caribbean),1
+1122,fy-NL,Frisian (Netherlands),1
+1127,ff-NG,Fulah (Nigeria),1
+2108,ga-IE,Irish (Ireland),1
+1110,gl-ES,Galician (Spain),1
+1079,ka-GE,Georgian (Georgia),1
+1031,de-DE,German (Germany),1
+3079,de-AT,German (Austria),1
+5127,de-LI,German (Liechtenstein),1
+4103,de-LU,German (Luxembourg),1
+1032,el-GR,Greek (Greece),1
+1140,gn-PY,Guarani (Paraguay),1
+1095,gu-IN,Gujarati (India),1
+1128,ha-Latn-NG,Hausa (Latin) (Nigeria),1
+1141,haw-US,Hawaiian (United States),1
+1037,he-IL,Hebrew (Israel),1
+1081,hi-IN,Hindi (India),1
+1038,hu-HU,Hungarian (Hungary),1
+1039,is-IS,Icelandic (Iceland),1
+1136,ig-NG,Igbo (Nigeria),1
+1057,id-ID,Indonesian (Indonesia),1
+1117,iu-Cans-CA,Inuktitut (Syllabics) (Canada),1
+1040,it-IT,Italian (Italy),1
+1041,ja-JP,Japanese (Japan),1
+1099,kn-IN,Kannada (India),1
+1137,kr-Latn-NG,Kanuri (Latin) (Nigeria),1
+1120,ks-Arab,Kashmiri (Perso-Arabic),1
+1087,kk-KZ,Kazakh (Kazakhstan),1
+1107,km-KH,Khmer (Cambodia),1
+1088,ky-KG,Kyrgyz (Kyrgyzstan),1
+1111,kok-IN,Konkani (India),1
+1042,ko-KR,Korean (Korea),1
+1088,ky-KG,Kyrgyz (Kyrgyzstan),1
+1108,lo-LA,Lao (Lao P.D.R.),1
+1142,la-VA,Latin (Vatican City),1
+1062,lv-LV,Latvian (Latvia),1
+1063,lt-LT,Lithuanian (Lithuania),1
+1071,mk-MK,Macedonian (North Macedonia),1
+1100,ml-IN,Malayalam (India),1
+2110,ms-BN,Malay (Brunei Darussalam),1
+1086,ms-MY,Malay (Malaysia),1
+1082,mt-MT,Maltese (Malta),1
+1102,mr-IN,Marathi (India),1
+2058,es-MX,Spanish (Mexico),1
+1104,mn-MN,Mongolian (Cyrillic) (Mongolia),1
+1121,ne-NP,Nepali (Nepal),1
+1044,nb-NO,Norwegian (Bokmal) (Norway),1
+2068,nn-NO,Norwegian (Nynorsk) (Norway),1
+1096,or-IN,Odia (India),1
+1138,om-ET,Oromo (Ethiopia),1
+1123,ps-AF,Pashto (Afghanistan),1
+1065,fa-IR,Persian (Iran),1
+1045,pl-PL,Polish (Poland),1
+2070,pt-PT,Portuguese (Portugal),1
+1046,pt-BR,Portuguese (Brazil),1
+1094,pa-IN,Punjabi (India),1
+1047,rm-CH,Romansh (Switzerland),1
+1048,ro-RO,Romanian (Romania),1
+2072,ro-MD,Romanian (Moldova),1
+1049,ru-RU,Russian (Russia),1
+2073,ru-MD,Russian (Moldova),1
+1083,se-NO,Sami (Northern) (Norway),1
+1103,sa-IN,Sanskrit (India),1
+3098,sr-Cyrl-CS,Serbian (Cyrillic) (Serbia and Montenegro (Former)),1
+2074,sr-Latn-CS,Serbian (Latin) (Serbia and Montenegro (Former)),1
+1072,st-ZA,Sotho (South Africa),1
+2052,zh-CN,Chinese (Simplified) (People's Republic of China),1
+2137,sd-Arab-PK,Sindhi (Islamic Republic of Pakistan),1
+1115,si-LK,Sinhala (Sri Lanka),1
+1051,sk-SK,Slovak (Slovakia),1
+1060,sl-SI,Slovenian (Slovenia),1
+1143,so-SO,Somali (Somalia),1
+1070,hsb-DE,Upper Sorbian (Germany),1
+1034,es-ES_tradnl,Spanish (Spain),1
+11274,es-AR,Spanish (Argentina),1
+16394,es-BO,Spanish (Bolivia),1
+13322,es-CL,Spanish (Chile),1
+9226,es-CO,Spanish (Colombia),1
+5130,es-CR,Spanish (Costa Rica),1
+7178,es-DO,Spanish (Dominican Republic),1
+12298,es-EC,Spanish (Ecuador),1
+17418,es-SV,Spanish (El Salvador),1
+4106,es-GT,Spanish (Guatemala),1
+18442,es-HN,Spanish (Honduras),1
+3082,es-ES,Spanish (Spain),1
+19466,es-NI,Spanish (Nicaragua),1
+6154,es-PA,Spanish (Panama),1
+15370,es-PY,Spanish (Paraguay),1
+10250,es-PE,Spanish (Peru),1
+20490,es-PR,Spanish (Puerto Rico),1
+14346,es-UY,Spanish (Uruguay),1
+8202,es-VE,Spanish (Bolivarian Republic of Venezuela),1
+1072,st-ZA,Sotho (South Africa),1
+1089,sw-KE,Kiswahili (Kenya),1
+1053,sv-SE,Swedish (Sweden),1
+2077,sv-FI,Swedish (Finland),1
+4108,fr-CH,French (Switzerland),1
+2055,de-CH,German (Switzerland),1
+2064,it-CH,Italian (Switzerland),1
+1114,syr-SY,Syriac (Syria),1
+1064,tg-Cyrl-TJ,Tajik (Cyrillic) (Tajikistan),1
+1119,tzm-Arab-MA,Central Atlas Tamazight (Arabic) (Morocco),1
+2143,tzm-Latn-DZ,Tamazight (Latin) (Algeria),1
+1097,ta-IN,Tamil (India),1
+1092,tt-RU,Tatar (Russia),1
+1098,te-IN,Telugu (India),1
+1054,th-TH,Thai (Thailand),1
+1105,bo-CN,Tibetan (People's Republic of China),1
+2163,ti-ER,Tigrinya (Eritrea),1
+1139,ti-ET,Tigrinya (Ethiopia),1
+1028,zh-TW,Chinese (Traditional) (Taiwan),1
+1073,ts-ZA,Tsonga (South Africa),1
+1074,tn-ZA,Setswana (South Africa),1
+1055,tr-TR,Turkish (Turkey),1
+1090,tk-TM,Turkmen (Turkmenistan),1
+1058,uk-UA,Ukrainian (Ukraine),1
+1056,ur-PK,Urdu (Islamic Republic of Pakistan),1
+2115,uz-Cyrl-UZ,Uzbek (Cyrillic) (Uzbekistan),1
+1091,uz-Latn-UZ,Uzbek (Latin) (Uzbekistan),1
+1075,ve-ZA,Venda (South Africa),1
+1066,vi-VN,Vietnamese (Vietnam),1
+1106,cy-GB,Welsh (United Kingdom),1
+1076,xh-ZA,Xhosa (South Africa),1
+1144,ii-CN,Yi (People's Republic of China),1
+1085,yi-001,Yiddish (World),1
+1130,yo-NG,Yoruba (Nigeria),1
+1077,zu-ZA,Zulu (South Africa),1
