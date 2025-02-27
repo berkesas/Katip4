@@ -9,13 +9,15 @@ Many languages around the world lack built-in spellchecking functionality and ar
 # Features
 
 - Access the UI via the Word Ribbon menu.
+- Edit spelling using a dialog window.
+- Edit spelling using right-click context menu.
 - Change/Change All misspelled words with suggestions.
 - Ignore Once/Ignore All options for the current spellchecking session.
 - Add words to the permanent user dictionary.
 - Change the UI display language of the add-in.
 - Change the spelling language based on available languages.
 - Toggle auto spellcheck and auto clear spellcheck functionalities on/off.
-- Customize the color used for highlighting misspellings.
+- Customize the color and underline style used for highlighting misspellings.
 - Load additional dictionaries from a specified folder.
 - Navigate through misspellings efficiently.
 - Customize the set of characters considered as word separators.
@@ -87,10 +89,12 @@ You can build your own release using the sources in the `x86` and `x64` folders.
 - Currently, it works only for plain text content in the main body. It doesn't support headers, footers, or other special types of content.
 - The quality of spellchecking depends on the quality of Hunspell dictionaries for each language.
 - The misspelling color is limited to only standard colors, even if chosen from the standard Font dialog window of Word.
+- Misspelling style is not fully visible in Settings window.
+- Navigation through errors can be erratic if used too dynamically.
 
 # Contribution
 
-Contributions are welcome.
+Contributions and feedback are welcome.
 
 # License
 
