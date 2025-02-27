@@ -51,3 +51,5 @@ msgDictionaryReloaded=Dictionaries are reloaded.
 msgWordAdded=Word added.
 txtNoErrors=No misspellings found.
 titleAddWord=Add Word
+chkWindowless=Use windowless mode
+msgInvalidUnderline=This underline is not allowed

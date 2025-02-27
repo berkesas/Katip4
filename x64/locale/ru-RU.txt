@@ -51,3 +51,5 @@ msgDictionaryReloaded=Словари перезагружены.
 msgWordAdded=Слово добавлено.
 txtNoErrors=Ошибок не найдено.
 titleAddWord=Добавить слово
+chkWindowless=Использовать безоконный режим
+msgInvalidUnderline=Выбор данного варианта подчеркивания не допускается

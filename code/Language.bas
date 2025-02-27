@@ -81,7 +81,7 @@ On Error GoTo PROC_ERROR
 
     Set fileStream = CreateObject("ADODB.Stream")
     With fileStream
-        .Type = 2 ' Specify text stream type
+        .Type = 2
         .Charset = "UTF-8"
         .Open
         .LoadFromFile filePath
@@ -89,10 +89,8 @@ On Error GoTo PROC_ERROR
         .Close
     End With
     
-    'Debug.Print fileContent
     lines = Split(fileContent, vbCrLf)
     lineCount = UBound(lines)
-    'Debug.Print lineCount
     ReDim languages(0 To lineCount)
     
     For i = 1 To lineCount

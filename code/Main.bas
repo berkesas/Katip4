@@ -40,7 +40,6 @@ On Error GoTo PROC_ERROR
             Else
                 CompatibilityVersion = 12
             End If
-            'Debug.Print Version & ":" & CompatibilityVersion
             frmHelp.lblVersion.Caption = Main.MACRO_VERSION & ":" & System.GetWindowsBitVersion & ":" & System.GetWordBitVersion
             Settings.Initialize
             Language.Initialize

@@ -74,6 +74,8 @@ Public Type MisspellingRange
     End As Long
     Status As Long
     OriginalColor As Long
+    OriginalUnderineColor As Long
+    OriginalUnderlineStyle As Long
 End Type
 Private spellingLocale As String
 #If VBA7 And Win64 Then
@@ -82,30 +84,37 @@ Private hunspell As LongPtr
 Private hunspell As Long
 #End If
 Private misspellings() As MisspellingRange
+Private suggestions() As String
 Dim intMisspellingCount As Long
 Private regex As VBScript_RegExp_55.RegExp
 Private intCurrentError As Long
 Private errorColorIndex As Long
+Private Editor As InlineEditor
 Sub Initialize()
+    Set Editor = New InlineEditor
     LoadHunspell
 End Sub
 Public Sub ShowSpelling()
     UI.Initialize
-    frmSpelling.chkAutocheck.value = Settings.GetAutoCheck
+    frmSpelling.chkAutoCheck.value = Settings.GetAutoCheck
     frmSpelling.chkAutoClear.value = Settings.GetAutoClear
     FirstError
-    'frmSpelling.btnChange.Enabled = False
-    'frmSpelling.btnChangeAll.Enabled = False
+    
     If Settings.GetAutoCheck = True Then
         CheckDocument
     End If
-    frmSpelling.Show (0)
+    
+    If Not Settings.GetUseWindowless Then
+        frmSpelling.Show (0)
+    End If
 End Sub
 Public Sub HideSpelling()
     If Settings.GetAutoClear = True Then
         ResetCheck
     End If
-    frmSpelling.Hide
+    If Not Settings.GetUseWindowless Then
+        frmSpelling.Hide
+    End If
 End Sub
 Sub LoadHunspell()
 #If DebugMode = 0 Then
@@ -124,11 +133,6 @@ On Error GoTo PROC_ERROR
     dictionaryPath = dictionaryFolder & "\" & spellingLocale & ".dic"
     userDictionaryPath = dictionaryFolder & "\" & spellingLocale & "_user.dic"
 
-    ' Debug output for file paths
-    'Debug.Print affixPath
-    'Debug.Print dictionaryPath
-    'Debug.Print userDictionaryPath
-
     If Filesystem.FileExists(affixPath) And Filesystem.FileExists(dictionaryPath) Then
         Call HunspellInit(hunspell, affixPath, dictionaryPath)
         If Filesystem.FileExists(userDictionaryPath) Then
@@ -136,7 +140,6 @@ On Error GoTo PROC_ERROR
         End If
     End If
     
-    'Debug.Print "Dictionary loaded: " & hunspell
 PROC_EXIT:
     Exit Sub
 PROC_ERROR:
@@ -147,7 +150,6 @@ End Sub
 Sub UnloadHunspell()
     On Error Resume Next
     If hunspell <> 0 Then
-        'Debug.Print "Dictionary unloading: " & hunspell
         HunspellFree hunspell
     End If
 End Sub
@@ -170,7 +172,10 @@ Sub CheckDocument()
     Dim intTotalWords As Long
     Dim intCurrentWord As Long
     
-    
+    If Editor Is Nothing Then
+        Set Editor = New InlineEditor
+    End If
+
     ResetCheck
     
     Set regex = New VBScript_RegExp_55.RegExp
@@ -188,17 +193,9 @@ Sub CheckDocument()
     errorColorIndex = Settings.GetErrorColorIndex
     
     If hunspell = 0 Then
-        'Debug.Print "Dictionary is not loaded. Re-loading."
         ReloadHunspell
     End If
-    
-    'check spelling of selection
-    'If Selection.Start <> Selection.End Then
-    '    Set spellingRange = Selection.Range
-    'Else
-    '    Set spellingRange = ActiveDocument.Range
-    'End If
-    
+        
     ActiveDocument.Range.LanguageID = Settings.GetLanguageID
     ActiveDocument.Range.NoProofing = True
     
@@ -221,8 +218,6 @@ Sub CheckDocument()
             End If
             DoEvents
         Next
-    Else
-        'Debug.Print "Dictionary is not loaded: " & hunspell
     End If
     
     If intMisspellingCount > 0 Then
@@ -244,6 +239,11 @@ Function CheckRangeSpelling(rngStory As Range)
     Dim strText As String
     Dim rng As Range
     Dim lastPosition As Long
+    Dim errorUnderlineStyle As Long
+    Dim errorUnderlineColor As Long
+    
+    errorUnderlineStyle = Settings.GetUnderlineStyle
+    errorUnderlineColor = Settings.GetUnderlineColor
     
     lastPosition = 0
     strText = CleanWord(rngStory.Text)
@@ -251,19 +251,17 @@ Function CheckRangeSpelling(rngStory As Range)
         arrMisspellings = GetMisspellingsList(hunspell, strText)
         If Helper.IsArrayReady(arrMisspellings) = True Then
             For i = LBound(arrMisspellings) To UBound(arrMisspellings)
-                'Debug.Print arrMisspellings(i)
                 Set rng = FindTextRange(rngStory, arrMisspellings(i), lastPosition)
                 If Not rng Is Nothing Then
-                    'Debug.Print rng.Text & ":" & rng.Start & ":" & rng.End
                     ReDim Preserve misspellings(0 To intMisspellingCount)
                     misspellings(intMisspellingCount).Text = rng.Text
                     misspellings(intMisspellingCount).Start = rng.Start
                     misspellings(intMisspellingCount).End = rng.End
                     misspellings(intMisspellingCount).Status = MisspellingStatus.Error
                     misspellings(intMisspellingCount).OriginalColor = GetRangeColor(rng)
-                    SetRangeColor rng, intMisspellingCount, errorColorIndex
-                    'rng.Font.TextColor.RGB = errorColorIndex
-                    'rng.NoProofing = False
+                    misspellings(intMisspellingCount).OriginalUnderlineStyle = rng.Font.underline
+                    misspellings(intMisspellingCount).OriginalUnderineColor = rng.Font.underlineColor
+                    SetRangeColor rng, intMisspellingCount, errorColorIndex, errorUnderlineStyle, errorUnderlineColor
                     intMisspellingCount = intMisspellingCount + 1
                     lastPosition = rng.End
                 End If
@@ -329,8 +327,9 @@ Function GetMisspellingsList(hunspell As Long, strText As String) As String()
 End Function
 #End If
 Function CleanWord(strInput As String) As String
-'On Error GoTo PROC_ERROR
-'On Error Resume Next
+#If DebugMode = 0 Then
+On Error GoTo PROC_ERROR
+#End If
     Dim result As String
     If Len(strInput) > 0 Then
         result = regex.Replace(strInput, " ")
@@ -341,14 +340,16 @@ Function CleanWord(strInput As String) As String
         result = ""
     End If
     CleanWord = result
+#If DebugMode = 0 Then
 PROC_EXIT:
     Exit Function
 PROC_ERROR:
     Helper.ErrorHandler "Spelling.CleanWord:" & strInput
     GoTo PROC_EXIT
+#End If
 End Function
 Sub NavigateErrors()
-    'On Error Resume Next
+On Error Resume Next
     Dim key As Long
     Dim currentSentence As String
     Dim rng As Range
@@ -359,9 +360,15 @@ Sub NavigateErrors()
         frmSpelling.txtMisspelling.Text = Localization.GetLocalizedString("txtNoErrors", "No misspellings found")
         frmSpelling.DisableControls
         intCurrentError = -1
+        Editor.ClearContextMenu
+        If Err Then
+            If Err.Number = 9 Then
+                Set Editor = New InlineEditor
+            End If
+            On Error GoTo PROC_ERROR
+        End If
     Else
         frmSpelling.EnableControls
-        'Debug.Print "Current Error:" & intCurrentError & ":" & misspellings(intCurrentError).Text
         misspelling = misspellings(intCurrentError)
         If misspelling.Start >= ActiveDocument.Range.Start And misspelling.End <= ActiveDocument.Range.End Then
             Set rng = ActiveDocument.Range(Start:=misspelling.Start, End:=misspelling.End)
@@ -371,12 +378,20 @@ Sub NavigateErrors()
             startPos = InStr(currentSentence, misspelling.Text)
             If startPos > 0 Then
                 SetTextColor frmSpelling.txtMisspelling, 0, Len(currentSentence), WdColor.wdColorAutomatic
-                SetTextColor frmSpelling.txtMisspelling, startPos - 1, Len(misspelling.Text), errorColorIndex
+                SetTextColor frmSpelling.txtMisspelling, startPos - 1, Len(misspelling.Text), WdColor.wdColorRed
             End If
             GetSuggestionsList hunspell, misspelling.Text
             ActivateRange misspelling
+            If Settings.GetUseWindowless Then
+                Editor.UpdateContextMenu rng, misspelling, suggestions
+            End If
         End If
     End If
+PROC_EXIT:
+    Exit Sub
+PROC_ERROR:
+    Helper.ErrorHandler "Spelling.IgnoreOnce"
+    GoTo PROC_EXIT
 End Sub
 Function GetErrorCount() As Long
     Dim result As Long
@@ -404,17 +419,11 @@ Function GetSentenceContainingRange(rng As Range) As String
         strResult = rng.Sentences(1).Text
     End If
     
-    'Debug.Print "The sentence containing the range is: " & rng.Text & ":" & sentenceRng
-    'If Len(strResult) > Len(rng.Text) Then
         foundPos = InStr(strResult, rng.Text)
         If foundPos > LENGTH_BEFORE_MISSPELLING Then
             strResult = Mid(strResult, foundPos - LENGTH_BEFORE_MISSPELLING)
         End If
-    'Else
-    '    strResult = rng.Text
-    'End If
     GetSentenceContainingRange = strResult
-    ' Display the sentence in a message box
 End Function
 Private Sub SetTextColor(ByRef inkEditControl As Object, ByVal startPos As Long, ByVal length As Long, ByVal color As Long)
     With inkEditControl
@@ -451,9 +460,7 @@ Function GetErrorIndex(intErrorIndex As Long, intDirection As Long) As Long
         intStart = intErrorIndex - 1
         intEnd = LBound(misspellings)
     End If
-    
-    'Debug.Print intErrorIndex & ":" & "0" & ":" & UBound(misspellings)
-        
+            
     For i = intStart To intEnd Step intDirection
         If misspellings(i).Status = MisspellingStatus.Error Then
             result = i
@@ -466,7 +473,6 @@ End Function
 #If VBA7 And Win64 Then
 Sub GetSuggestionsList(hunspell As LongPtr, word As String)
     Dim suggestionsPtr As LongPtr
-    Dim suggestions() As String
     Dim count As Long
     Dim wordPtr As LongPtr
     Dim i As Long
@@ -474,14 +480,12 @@ Sub GetSuggestionsList(hunspell As LongPtr, word As String)
     frmSpelling.lbxSuggestions.Clear
     
     If hunspell <> 0 Then
-        'Debug.Print "Suggestions from hunspell: " & hunspell
         wordPtr = StrPtr(word)
         suggestionsPtr = GetSuggestions(hunspell, wordPtr, count)
         suggestions = Helper.UTF8ToString(suggestionsPtr, count)
         If UBound(suggestions) > -1 Then
             For i = 0 To UBound(suggestions) - 1
                 frmSpelling.lbxSuggestions.AddItem suggestions(i)
-                'Debug.Print suggestions(i)
             Next i
             If frmSpelling.lbxSuggestions.ListCount > 0 Then
                 frmSpelling.lbxSuggestions.ListIndex = 0
@@ -492,7 +496,6 @@ End Sub
 #Else
 Sub GetSuggestionsList(hunspell As Long, word As String)
     Dim suggestionsPtr As Long
-    Dim suggestions() As String
     Dim count As Long
     Dim wordPtr As Long
     Dim i As Long
@@ -500,14 +503,12 @@ Sub GetSuggestionsList(hunspell As Long, word As String)
     frmSpelling.lbxSuggestions.Clear
     
     If hunspell <> 0 Then
-        'Debug.Print "Suggestions from hunspell: " & hunspell
         wordPtr = StrPtr(word)
         suggestionsPtr = GetSuggestions(hunspell, wordPtr, count)
         suggestions = Helper.UTF8ToString(suggestionsPtr, count)
         If UBound(suggestions) > -1 Then
             For i = 0 To UBound(suggestions) - 1
                 frmSpelling.lbxSuggestions.AddItem suggestions(i)
-                'Debug.Print suggestions(i)
             Next i
             If frmSpelling.lbxSuggestions.ListCount > 0 Then
                 frmSpelling.lbxSuggestions.ListIndex = 0
@@ -523,40 +524,50 @@ Sub ActivateRange(misspelling As MisspellingRange)
     ActiveWindow.ScrollIntoView Selection.Range, True
     'ShowDialogAwayFromSelection
 End Sub
-Sub IgnoreOnce()
+Public Sub IgnoreOnce()
+#If DebugMode = 0 Then
+On Error GoTo PROC_ERROR
+#End If
+
     Dim strSource As String
-    
-    strSource = misspellings(intCurrentError).Text
-    
-    IgnoreRange intCurrentError, strSource
+    If intCurrentError >= LBound(misspellings) And intCurrentError <= UBound(misspellings) Then
+        strSource = misspellings(intCurrentError).Text
+        IgnoreRange intCurrentError, strSource
+    End If
     NextError
+    
+#If DebugMode = 0 Then
+PROC_EXIT:
+    Exit Sub
+PROC_ERROR:
+    Helper.ErrorHandler "Spelling.IgnoreOnce"
+    GoTo PROC_EXIT
+#End If
 End Sub
-Sub IgnoreAll()
+Public Sub IgnoreAll()
     Dim strSource As String
     Dim i As Long
-    
-    strSource = misspellings(intCurrentError).Text
-    If intMisspellingCount > 0 Then
-        For i = 0 To UBound(misspellings)
-            If misspellings(i).Text = strSource Then
-                IgnoreRange i, strSource
-            End If
-        Next
+    If intCurrentError >= LBound(misspellings) And intCurrentError <= UBound(misspellings) Then
+        strSource = misspellings(intCurrentError).Text
+        If intMisspellingCount > 0 Then
+            For i = 0 To UBound(misspellings)
+                If misspellings(i).Text = strSource Then
+                    IgnoreRange i, strSource
+                End If
+            Next
+        End If
     End If
     NextError
 End Sub
 Sub IgnoreRange(intErrorIndex As Long, strSource As String)
     Dim rng As Range
     Dim i As Long
-    
-    Set rng = ActiveDocument.Range(Start:=misspellings(intErrorIndex).Start, End:=misspellings(intErrorIndex).End)
-    #If VBA7 Then
-    rng.Font.TextColor.RGB = misspellings(intErrorIndex).OriginalColor
-    #Else
-    rng.Font.color = misspellings(intErrorIndex).OriginalColor
-    #End If
-    misspellings(intErrorIndex).Status = MisspellingStatus.Ignored
-    i = AddWord(hunspell, StrPtr(strSource))
+    If intErrorIndex >= LBound(misspellings) And intErrorIndex <= UBound(misspellings) Then
+        Set rng = ActiveDocument.Range(Start:=misspellings(intErrorIndex).Start, End:=misspellings(intErrorIndex).End)
+        SetRangeColor rng, intErrorIndex, misspellings(intErrorIndex).OriginalColor, misspellings(intErrorIndex).OriginalUnderlineStyle, misspellings(intErrorIndex).OriginalUnderineColor
+        misspellings(intErrorIndex).Status = MisspellingStatus.Ignored
+        i = AddWord(hunspell, StrPtr(strSource))
+    End If
 End Sub
 Sub Change()
     Dim strSource As String
@@ -595,7 +606,7 @@ Function GetRangeColor(rng As Range) As Long
         GetRangeColor = rng.Font.color
     #End If
 End Function
-Sub SetRangeColor(rng As Range, intErrorIndex As Long, color As Long)
+Sub SetRangeColor(rng As Range, intErrorIndex As Long, color As Long, underlineStyle As Long, underlineColor As Long)
     #If VBA7 Then
     If Main.CompatibilityVersion >= 14 Then
         rng.Font.TextColor.RGB = color
@@ -605,11 +616,13 @@ Sub SetRangeColor(rng As Range, intErrorIndex As Long, color As Long)
     #Else
         rng.Font.color = color
     #End If
+    rng.Font.underline = underlineStyle
+    rng.Font.underlineColor = underlineColor
 End Sub
 Sub ChangeRange(intErrorIndex As Long, strSource As String, strTarget As String)
     Dim rng As Range
     Set rng = ActiveDocument.Range(Start:=misspellings(intErrorIndex).Start, End:=misspellings(intErrorIndex).End)
-    SetRangeColor rng, intErrorIndex, misspellings(intErrorIndex).OriginalColor
+    SetRangeColor rng, intErrorIndex, misspellings(intErrorIndex).OriginalColor, misspellings(intErrorIndex).OriginalUnderlineStyle, misspellings(intErrorIndex).OriginalUnderineColor
     rng.Text = strTarget
     misspellings(intErrorIndex).Status = MisspellingStatus.Fixed
     UpdateRanges intErrorIndex, Len(strTarget) - Len(strSource)
@@ -640,8 +653,7 @@ Sub ResetCheck()
             If misspelling.Status = MisspellingStatus.Error Then
                 If misspelling.Start >= ActiveDocument.Range.Start And misspelling.End <= ActiveDocument.Range.End Then
                     Set rng = ActiveDocument.Range(Start:=misspelling.Start, End:=misspelling.End)
-                    'Debug.Print rng.Text & ":" & misspelling.OriginalColor
-                    SetRangeColor rng, i, misspelling.OriginalColor
+                    SetRangeColor rng, i, misspelling.OriginalColor, misspelling.OriginalUnderlineStyle, misspelling.OriginalUnderineColor
                 End If
             End If
         Next
@@ -708,4 +720,47 @@ Sub ShowAddWord()
     frmAddWord.txtWord.value = strSource
     frmAddWord.txtAffixes.value = ""
     frmAddWord.Show (1)
+End Sub
+Function GetSpellingSuggestions() As String()
+    GetSpellingSuggestions = suggestions
+End Function
+Sub SelectionChange(sel As Selection)
+    Dim rng As Range
+    Set rng = sel.Range
+    Dim intDetectedErrorIndex As Long
+    
+    If rng.Font.underline = Settings.GetUnderlineStyle Then
+        intDetectedErrorIndex = FindMisspelling(rng)
+        If intDetectedErrorIndex > -1 Then
+            SetCurrentErrorIndex (intDetectedErrorIndex)
+            NavigateErrors
+        End If
+    End If
+End Sub
+Function FindMisspelling(rng As Range) As Long
+    Dim i As Long
+    Dim intResult As Long
+    intResult = -1
+    For i = LBound(misspellings) To UBound(misspellings)
+        If misspellings(i).Status = MisspellingStatus.Error Then
+            If rng.Start >= misspellings(i).Start And rng.End <= misspellings(i).End Then
+                intResult = i
+                Exit For
+            End If
+        End If
+    Next
+    FindMisspelling = intResult
+End Function
+Sub SetCurrentErrorIndex(intErrorIndex As Long)
+    intCurrentError = intErrorIndex
+End Sub
+Sub RunFunction()
+    Dim clickedButton As CommandBarButton
+    Set clickedButton = CommandBars.ActionControl
+    Dim arrParams() As String
+    arrParams = Split(clickedButton.Parameter, "|")
+    If UBound(arrParams) > 0 Then
+        frmSpelling.lbxSuggestions.ListIndex = CInt(arrParams(1))
+        Application.Run arrParams(0)
+    End If
 End Sub

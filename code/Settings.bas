@@ -35,7 +35,10 @@ Private strLanguageName As String
 Private autoCheck As Boolean
 Private autoClear As Boolean
 Private errorColorIndex As Long
+Private underlineStyle As Long
+Private underlineColor As Long
 Private showErrors As Boolean
+Private useWindowless As Boolean
 Public GlobalEvent As GlobalEventManager
 Public Sub Initialize()
     LoadDisplayLanguages
@@ -57,7 +60,10 @@ Public Sub LoadSettings()
     SetAutoCheck CBool(AppSettings.ReadSetting("General", "autoCheck", False))
     SetAutoClear CBool(AppSettings.ReadSetting("General", "autoClear", False))
     SetShowErrors CBool(AppSettings.ReadSetting("General", "showErrors", False))
+    SetUseWindowless CBool(AppSettings.ReadSetting("General", "useWindowless", False))
     SetErrorColorIndex AppSettings.ReadSetting("General", "errorColorIndex", RGB(255, 0, 0))
+    SetUnderlineStyle AppSettings.ReadSetting("General", "underlineStyle", WdUnderline.wdUnderlineWavy)
+    SetUnderlineColor AppSettings.ReadSetting("General", "underlineColor", WdColor.wdColorRed)
     DisplayLanguageEvent (GetDisplayLocale)
 End Sub
 Sub LoadDisplayLanguages()
@@ -135,13 +141,15 @@ Sub SaveSettings()
 #If DebugMode = 0 Then
 On Error GoTo PROC_ERROR
 #End If
-    'Debug.Print "Settings saved"
     AppSettings.WriteSetting "General", "displayLocale", displayLanguageInfos(frmSettings.cbxDisplayLanguages.ListIndex).Locale
     AppSettings.WriteSetting "General", "spellingLocale", spellingLanguageInfos(frmSettings.cbxSpellingLanguages.ListIndex).Locale
     AppSettings.WriteSetting "General", "splitCharacters", frmSettings.txtSplitCharacters.value
-    AppSettings.WriteSetting "General", "autoCheck", frmSettings.chkAutocheck.value
+    AppSettings.WriteSetting "General", "autoCheck", frmSettings.chkAutoCheck.value
     AppSettings.WriteSetting "General", "autoClear", frmSettings.chkAutoClear.value
     AppSettings.WriteSetting "General", "errorColorIndex", frmSettings.txtColor.ForeColor
+    AppSettings.WriteSetting "General", "underlineColor", GetUnderlineColor
+    AppSettings.WriteSetting "General", "underlineStyle", GetUnderlineStyle
+    AppSettings.WriteSetting "General", "useWindowless", frmSettings.chkWindowless.value
     LoadSettings
     Spelling.ReloadHunspell
     UI.ShowMessage Localization.GetLocalizedString("frmSettingsSettingsSaved")
@@ -226,12 +234,24 @@ Sub OpenColorPicker()
     On Error Resume Next
     Dim OriginalColor As Long
     Dim selectedColor As Long
+    Dim selectedUnderline As Long
+    Dim selectedUnderlineColor As Long
     
     OriginalColor = Spelling.GetRangeColor(Selection.Range)
     If Application.Dialogs(wdDialogFormatFont).Show = -1 Then
         selectedColor = Spelling.GetRangeColor(Selection.Range)
+        selectedUnderline = Selection.Range.Font.underline
+        selectedUnderlineColor = Selection.Range.Font.underlineColor
         ActiveDocument.Undo
         frmSettings.txtColor.ForeColor = selectedColor
+        If selectedUnderline > 2 Then
+            frmSettings.txtColor.Font.underline = selectedUnderline
+            SetUnderlineStyle selectedUnderline
+        Else
+            UI.ShowMessage Localization.GetLocalizedString("msgInvalidUnderline", "Choosing no underline is not allowed.")
+        End If
+        SetUnderlineColor selectedUnderlineColor
+        'frmSettings.txtColor.Font.UnderlineColor FOR FUTURE IMPLEMENTATION
         If Err.Number = 380 Then
             UI.ShowMessage Localization.GetLocalizedString("msgStandardColorsOnly", "Only standard colors can be chosen")
         End If
@@ -245,4 +265,21 @@ End Sub
 Sub OpenDictionariesFolder()
     Filesystem.OpenFolderInExplorer Filesystem.GetDictionaryFolder & "\"
 End Sub
-
+Public Sub SetUseWindowless(value As Boolean)
+    useWindowless = value
+End Sub
+Public Function GetUseWindowless() As Boolean
+    GetUseWindowless = useWindowless
+End Function
+Public Sub SetUnderlineStyle(value As Long)
+    underlineStyle = value
+End Sub
+Public Function GetUnderlineStyle() As Long
+    GetUnderlineStyle = underlineStyle
+End Function
+Public Sub SetUnderlineColor(value As Long)
+    underlineColor = value
+End Sub
+Public Function GetUnderlineColor() As Long
+    GetUnderlineColor = underlineColor
+End Function

@@ -1,6 +1,6 @@
 ﻿[Setup]
 AppName=Katip
-AppVersion=4.0.1
+AppVersion=4.1.0
 AppPublisher=Berkesas
 AppPublisherURL=https://berkesas.github.io/katip
 DefaultDirName={commonpf}\Katip

@@ -51,3 +51,5 @@ msgDictionaryReloaded=Sözlükler yeniden yüklendi.
 msgWordAdded=Kelime eklendi.
 txtNoErrors=Hiçbir yazım hatası bulunamadı.
 titleAddWord=Kelime ekle
+chkWindowless=Penceresiz modu kullan
+msgInvalidUnderline=Bu alt çizgi geçerli değil

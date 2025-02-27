@@ -26,22 +26,22 @@ Private Declare PtrSafe Function LoadLibrary Lib "kernel32" Alias "LoadLibraryW"
 Private Declare PtrSafe Function GetProcAddress Lib "kernel32" (ByVal hModule As LongPtr, ByVal lpProcName As String) As LongPtr
 Private Declare PtrSafe Function FreeLibrary Lib "kernel32" (ByVal hLibModule As LongPtr) As Long
 
+Option Explicit
+Dim oPopup As CommandBarPopup
+Dim oCtr As CommandBarControl
 Sub LoadAndCallDLL()
     'On Error Resume Next
     Dim hModule As LongPtr
     Dim funcPtr As LongPtr
     
-    ' Load the DLL into memory
     Dim strDll As String
     strDll = "hunspellvba.dll"
     hModule = LoadLibrary(StrPtr(strDll))
     
     If hModule = 0 Then
-        Debug.Print "Failed to load DLL!"
         Exit Sub
     End If
 
-    ' Get the function pointer for SomeFunction in the DLL
     funcPtr = GetProcAddress(hModule, "HunspellInit")
     If funcPtr = 0 Then
         Debug.Print "Failed to find function in DLL!"
@@ -49,13 +49,7 @@ Sub LoadAndCallDLL()
         Exit Sub
     End If
 
-    ' Normally, you would declare the function and call it directly, like:
-    ' result = SomeFunction()
-
-    ' Free the DLL after use
     FreeLibrary hModule
 
     Debug.Print "Function loaded successfully, but needs Declare to call."
 End Sub
-
-
