@@ -32,12 +32,15 @@ Sub RibbonOnLoad(ribbon As IRibbonUI)
     Initialize
 End Sub
 Sub Initialize()
-    Main.Initialize
-    LoadLabels
-    frmAddWord.LoadLabels
-    frmHelp.LoadLabels
-    frmSettings.LoadLabels
-    frmSpelling.LoadLabels
+    If Not isLoaded Then
+        Main.Initialize
+        LoadLabels
+        frmAddWord.LoadLabels
+        frmHelp.LoadLabels
+        frmSettings.LoadLabels
+        frmSpelling.LoadLabels
+        isLoaded = True
+    End If
 End Sub
 Sub LoadLabels()
 #If DebugMode = 0 Then

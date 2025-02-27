@@ -57,7 +57,7 @@ Sub LoadLabels()
     frmSpelling.btnChangeAll.Caption = Localization.GetLocalizedString("btnChangeAll", "Change All")
     frmSpelling.btnClear.Caption = Localization.GetLocalizedString("btnClear", "Clear")
     frmSpelling.btnCheck.Caption = Localization.GetLocalizedString("btnCheck", "Check")
-    frmSpelling.chkAutocheck.Caption = Localization.GetLocalizedString("chkAutocheckShort", "Automatic check")
+    frmSpelling.chkAutoCheck.Caption = Localization.GetLocalizedString("chkAutocheckShort", "Automatic check")
     frmSpelling.chkAutoClear.Caption = Localization.GetLocalizedString("chkAutoclearShort", "Automatic clear")
     frmSpelling.btnCancel.Caption = Localization.GetLocalizedString("btnCancel", "Cancel")
 End Sub

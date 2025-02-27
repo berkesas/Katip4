@@ -51,3 +51,5 @@ msgDictionaryReloaded=Sözlükler täzeden ýüklendi.
 msgWordAdded=Söz goşuldy.
 txtNoErrors=Ýalňyş tapylmady.
 titleAddWord=Söz goş
+chkWindowless=Penjiresiz tertibi ulan
+msgInvalidUnderline=Bu aşaky çyzygy saýlamak bolmaýar

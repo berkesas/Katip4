@@ -41,3 +41,7 @@ Private Sub App_DocumentBeforeClose(ByVal Doc As Document, Cancel As Boolean)
     End If
 End Sub
 
+Private Sub App_WindowSelectionChange(ByVal sel As Selection)
+    Spelling.SelectionChange sel
+End Sub
+

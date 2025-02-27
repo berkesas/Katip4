@@ -138,7 +138,7 @@ Public Function UTF8ToString(itemsPtr As LongPtr, count As Long) As String()
 
     If itemsPtr <> 0 Then
         ReDim resultArray(0 To count)
-        For i = 0 To count
+        For i = 0 To count - 1
             CopyMemory itemPtr, ByVal (itemsPtr + i * LenB(itemPtr)), LenB(itemPtr)
             resultArray(i) = PtrToStringUTF8(itemPtr)
         Next i
@@ -221,7 +221,7 @@ Public Function UTF8ToString(itemsPtr As Long, count As Long) As String()
 
     If itemsPtr <> 0 Then
         ReDim resultArray(0 To count)
-        For i = 0 To count
+        For i = 0 To count - 1
             CopyMemory itemPtr, ByVal (itemsPtr + i * LenB(itemPtr)), LenB(itemPtr)
             resultArray(i) = PtrToStringUTF8(itemPtr)
         Next i

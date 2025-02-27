@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmSettings 
    Caption         =   "Settings"
-   ClientHeight    =   4260
+   ClientHeight    =   4752
    ClientLeft      =   36
    ClientTop       =   384
    ClientWidth     =   5556
@@ -82,8 +82,9 @@ Sub LoadLabels()
         Me.lblSplitCharacters.Caption = Localization.GetLocalizedString("lblSplitCharacters", "Split Characters")
         Me.btnReload.Caption = Localization.GetLocalizedString("btnReload", "Reload")
         Me.lblOpenDictionaries.Caption = Localization.GetLocalizedString("lblOpenDictionariesFolder", "Open dictionaries folder")
-        Me.chkAutocheck.Caption = Localization.GetLocalizedString("chkAutocheck", "Check automatically on window open")
+        Me.chkAutoCheck.Caption = Localization.GetLocalizedString("chkAutocheck", "Check automatically on window open")
         Me.chkAutoClear.Caption = Localization.GetLocalizedString("chkAutoclear", "Clear automatically on window close")
+        Me.chkWindowless.Caption = Localization.GetLocalizedString("chkWindowless", "Use windowless mode")
         Me.txtColor.value = Localization.GetLocalizedString("txtSampleText", "Sample text")
 End Sub
 Private Sub btnCancel_Click()
@@ -110,9 +111,10 @@ Private Sub LoadValues()
     cbxSpellingLanguages.ListIndex = Settings.GetSpellingLocaleIndex
     
     txtSplitCharacters.value = Settings.GetSplitCharacters
-    chkAutocheck.value = Settings.GetAutoCheck
+    chkAutoCheck.value = Settings.GetAutoCheck
     chkAutoClear.value = Settings.GetAutoClear
     txtColor.ForeColor = Settings.GetErrorColorIndex
+    chkWindowless.value = Settings.GetUseWindowless
 'PROC_EXIT:
 '    Exit Sub
 'PROC_ERROR:
