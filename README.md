@@ -4,8 +4,6 @@ Katip is an add-in designed to enhance spellchecking capabilities in the Microso
 
 Many languages around the world lack built-in spellchecking functionality and are not supported by major software vendors. The goal of this add-in is to integrate Hunspell's robust spellchecking features into Microsoft Word, thereby enabling spellchecking for low-resource languages. 
 
-[Hunspell](https://hunspell.github.io/) is a globally used open-source library.
-
 # Features
 
 - Access the UI via the Word Ribbon menu.
@@ -23,6 +21,14 @@ Many languages around the world lack built-in spellchecking functionality and ar
 - Customize the set of characters considered as word separators.
 - Save settings permanently.
 - Log errors to a text file.
+
+# Security
+
+Katip processes all data locally and your data does not leave your computer. 
+
+All code is open-source. [Hunspell](https://github.com/hunspell/hunspell) is a globally used open-source library. The code for Hunspellvba.dll is available at [HunspellVBA](https://github.com/berkesas/hunspellvba). The code for the katip4.dotm file is in /code folder or can be viewed in VBA IDE.
+
+If you download Katip from other sources it is impossible to guarantee that those files do not contain malicious code. Use them at your own risk.
 
 # Installation
 
